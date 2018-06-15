@@ -53306,6 +53306,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get('/activeChats').then(function (response) {
             _this.users = response.data;
+            for (var i = 0; i < _this.users.length; i++) {
+
+                Vue.set(_this.users[i], 'cnt', 0);
+            }
         });
     },
     mounted: function mounted() {
@@ -53314,10 +53318,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$on('newUser', function (data) {
             _this2.users.push(data);
         });
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$on('newMessage', function (data) {
+
+            for (var i = 0; i < _this2.users.length; i++) {
+                if (_this2.users[i].to == data.from) {
+                    _this2.users[i].cnt++;
+                    console.log(_this2.users[i]);
+                }
+            }
+        });
     },
 
     methods: {
         change: function change(user) {
+            for (var i = 0; i < this.users.length; i++) {
+                if (this.users[i] == user) {
+                    this.users[i].cnt = 0;
+                    break;
+                }
+            }
             this.$emit('change', {
 
                 id: user.to
@@ -53357,7 +53376,7 @@ var render = function() {
                 "\n                "
             ),
             _c("span", { staticClass: "badge badge-primary badge-pill" }, [
-              _vm._v("14")
+              _vm._v(_vm._s(user.cnt))
             ])
           ]
         )
@@ -53570,6 +53589,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(15);
 //
 //
 //
@@ -53591,6 +53611,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -53611,7 +53633,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Echo.private('P2Pchat.' + this.id).listen('messageSent', function (e) {
             if (e.message.from != _this.withh) {
-
+                __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$emit('newMessage', {
+                    from: e.message.from
+                });
                 return;
             }
             _this.messages.push({

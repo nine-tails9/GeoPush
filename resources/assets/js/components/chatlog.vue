@@ -20,6 +20,8 @@
 
 
 <script>
+
+import { EventBus } from '../app.js';
     export default{
 
         props:['withh', 'id'],
@@ -38,7 +40,9 @@
                Echo.private('P2Pchat.' + this.id).listen(
                     'messageSent', (e) =>{
                         if(e.message.from != this.withh){
-                            
+                            EventBus.$emit('newMessage', {
+                                from: e.message.from
+                            });
                             return;
                         }
                         this.messages.push({
@@ -57,6 +61,7 @@
                 axios.get('/chat/' + this.withh).then(response =>{
                     this.messages = response.data;
                 });
+                
             }
 
         },
