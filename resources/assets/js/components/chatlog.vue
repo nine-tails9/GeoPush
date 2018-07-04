@@ -39,6 +39,7 @@ import { EventBus } from '../app.js';
         created(){
                Echo.private('P2Pchat.' + this.id).listen(
                     'messageSent', (e) =>{
+                        if(e.message.to == 0)e.message.from = 0;
                         if(e.message.from != this.withh){
                             EventBus.$emit('newMessage', {
                                 from: e.message.from
@@ -58,9 +59,25 @@ import { EventBus } from '../app.js';
 
             withh: function(){
 
-                axios.get('/chat/' + this.withh).then(response =>{
-                    this.messages = response.data;
-                });
+
+                if(this.withh != 0){
+
+                    axios.get('/chat/' + this.withh).then(response =>{
+                        this.messages = response.data;
+                    });
+
+                }else{
+                    this.messages = [];
+                    axios.get('/globalChat').then(res =>{
+
+                        console.log(res.data);
+                        for(var i = 0; i < res.data.length; i++)
+                            for(var j = res.data[i].length - 1; j >= 0; j--)
+                                this.messages.push(res.data[i][j]);
+
+                    });
+
+                }
                 
             }
 

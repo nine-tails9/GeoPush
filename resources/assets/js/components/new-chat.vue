@@ -14,7 +14,7 @@
                     </div>
         </div>
         <button class="btn btn-default" @click = "findusers"> New Chat</button>
-
+        <button class="btn btn-success">New Broadcast</button>
         <hr>
         <ul class="list-group list-group-flush">
             <li class="list-group-item" v-for="user in users">

@@ -53265,6 +53265,8 @@ var render = function() {
       [_vm._v(" New Chat")]
     ),
     _vm._v(" "),
+    _c("button", { staticClass: "btn btn-success" }, [_vm._v("New Broadcast")]),
+    _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
     _c(
@@ -53370,6 +53372,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53378,7 +53385,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         return {
             users: [],
-            isActive: false
+            isActive: false,
+            cnt: 0
         };
     },
     created: function created() {
@@ -53404,17 +53412,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$on('newMessage', function (data) {
 
+            if (data.from == 0) _this2.cnt++;
             for (var i = 0; i < _this2.users.length; i++) {
                 if (_this2.users[i].to == data.from) {
                     _this2.users[i].cnt++;
-                    console.log(_this2.users[i]);
                 }
             }
         });
     },
 
     methods: {
+        area: function area() {
+
+            this.isActive = !this.isActive;
+            this.cnt = 0;
+            this.$emit('change', {
+
+                id: 0
+
+            });
+        },
         change: function change(user) {
+            this.isActive = false;
             for (var i = 0; i < this.users.length; i++) {
                 if (this.users[i] == user) {
                     this.users[i].cnt = 0;
@@ -53441,32 +53460,54 @@ var render = function() {
     _c(
       "ul",
       { staticClass: "list-group" },
-      _vm._l(_vm.users, function(user) {
-        return _c(
+      [
+        _c(
           "li",
           {
             staticClass: "list-group-item",
-            class: { active: _vm.withh == user.to },
-            on: {
-              click: function($event) {
-                _vm.change(user)
-              }
-            }
+            class: { active: _vm.isActive },
+            on: { click: _vm.area }
           },
           [
-            _vm._v(
-              "\n            \n                " +
-                _vm._s(user.name) +
-                "\n                \n                "
-            ),
-            user.cnt > 0
+            _vm._v("\n            Area Chat\n\n            "),
+            _vm.cnt
               ? _c("span", { staticClass: "badge badge-primary badge-pill" }, [
-                  _vm._v(_vm._s(user.cnt))
+                  _vm._v(" " + _vm._s(_vm.cnt) + " ")
                 ])
               : _vm._e()
           ]
-        )
-      })
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.users, function(user) {
+          return _c(
+            "li",
+            {
+              staticClass: "list-group-item",
+              class: { active: _vm.withh == user.to },
+              on: {
+                click: function($event) {
+                  _vm.change(user)
+                }
+              }
+            },
+            [
+              _vm._v(
+                "\n            \n                " +
+                  _vm._s(user.name) +
+                  "\n                \n                "
+              ),
+              user.cnt > 0
+                ? _c(
+                    "span",
+                    { staticClass: "badge badge-primary badge-pill" },
+                    [_vm._v(_vm._s(user.cnt))]
+                  )
+                : _vm._e()
+            ]
+          )
+        })
+      ],
+      2
     )
   ])
 }
@@ -53724,6 +53765,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Echo.private('P2Pchat.' + this.id).listen('messageSent', function (e) {
+            if (e.message.to == 0) e.message.from = 0;
             if (e.message.from != _this.withh) {
                 __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$emit('newMessage', {
                     from: e.message.from
@@ -53743,9 +53785,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         withh: function withh() {
             var _this2 = this;
 
-            axios.get('/chat/' + this.withh).then(function (response) {
-                _this2.messages = response.data;
-            });
+            if (this.withh != 0) {
+
+                axios.get('/chat/' + this.withh).then(function (response) {
+                    _this2.messages = response.data;
+                });
+            } else {
+                this.messages = [];
+                axios.get('/globalChat').then(function (res) {
+
+                    console.log(res.data);
+                    for (var i = 0; i < res.data.length; i++) {
+                        for (var j = res.data[i].length - 1; j >= 0; j--) {
+                            _this2.messages.push(res.data[i][j]);
+                        }
+                    }
+                });
+            }
         }
 
     },

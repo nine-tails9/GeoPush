@@ -3,6 +3,11 @@
     <div class="container">
         
         <ul class="list-group">
+            <li class="list-group-item" @click = "area" :class="{active:isActive}">
+                Area Chat
+
+                <span class="badge badge-primary badge-pill" v-if="cnt"> {{ cnt }} </span>
+            </li>
             <li class="list-group-item" :class = "{active: withh == user.to}" v-for="user in users" @click = "change(user)">
                 
                     {{user.name}}
@@ -26,6 +31,7 @@ import { EventBus } from '../app.js';
             return {
                 users : [],
                 isActive: false,
+                cnt: 0
             }
         },
         created(){
@@ -49,11 +55,11 @@ import { EventBus } from '../app.js';
                 this.users.push(data);
             });
             EventBus.$on('newMessage', (data) =>{ 
-            
+                
+                if(data.from == 0)this.cnt++;
                 for(var i = 0; i < this.users.length; i++){
                     if(this.users[i].to == data.from){
                         this.users[i].cnt++;
-                         console.log(this.users[i]);
                         
                     }
                 }
@@ -64,7 +70,20 @@ import { EventBus } from '../app.js';
         },
         methods:{
 
+            area(){
+
+                this.isActive = !this.isActive;
+                this.cnt = 0;
+                this.$emit('change',{
+
+                    id : 0
+
+                });
+
+
+            },
             change(user){
+                this.isActive = false;
                 for(var i = 0; i < this.users.length; i++){
                     if(this.users[i] == user){
                         this.users[i].cnt = 0;

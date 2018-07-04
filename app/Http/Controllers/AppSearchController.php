@@ -14,8 +14,8 @@ class AppSearchController extends Controller
 
         $error = ['error' => 'No Results Found'];
 
-        $lat = 2;
-        $lng = 3;
+        $lat = 0;
+        $lng = 0;
         $users = User::search('')->aroundLatLng($lat, $lng)->get();
         return $users;
     }

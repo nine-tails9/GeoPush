@@ -46,7 +46,18 @@ class MessageController extends Controller
             'message' => $req['message'],
             'to' => $req['to']
         ]);
+
+        if($req['to'] == 0){
+
+            $nearBy = User::search('')->aroundLatLng($user->cor_X, $user->cor_y)->get();
+
+            foreach($nearBy as $u){
+                broadcast(new messageSent($user, $u['id'], $message))->toOthers();
+            }
+
+        }else
         broadcast(new messageSent($user, $req['to'], $message))->toOthers();
+        
         return ['status' => 'Message Sent!'];
 
     }
@@ -63,6 +74,29 @@ class MessageController extends Controller
         ]);
 
         return ['status' => 'New Chat Added!'];
+
+    }
+
+    public function Gchat(Request $req){
+
+        $user = Auth::user();
+
+        $nearBy = User::search('')->aroundLatLng($user->cor_X, $user->cor_Y)->get();
+
+        $results = [];
+        foreach($nearBy as $res){
+
+            $res = message::where([
+                ['from', $res['id']],
+                ['to', 0]
+
+            ])->get();
+            if(count($res))
+            array_push($results, $res);
+        }
+
+
+        return $results;
 
     }
 }

@@ -47,6 +47,8 @@ Route::get('/search', [
     'uses' => 'AppSearchController@Search'
 ]);
 
+Route::get('/globalChat', 'MessageController@Gchat');
+
 Route::get('/chat/{with}', 'MessageController@chat');
 Route::post('/sendMessage', 'MessageController@sendMessage');
 
