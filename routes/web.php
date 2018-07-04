@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+if (env('APP_ENV') === 'production') {
+    \URL::forceScheme('https');
+}
 use App\User;
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +41,11 @@ Route::get('/activeChats', function(){
     $data = $user->mychats()->get();
     return $data;
 });
+
+Route::get('/search', [
+    'as' => 'api.search',
+    'uses' => 'AppSearchController@Search'
+]);
 
 Route::get('/chat/{with}', 'MessageController@chat');
 Route::post('/sendMessage', 'MessageController@sendMessage');

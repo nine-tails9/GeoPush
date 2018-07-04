@@ -8,7 +8,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
+import VueGeolocation from 'vue-browser-geolocation';
+Vue.use(VueGeolocation);
 export const EventBus = new Vue();
 /**
  * Next, we will create a fresh Vue application instance and attach it to

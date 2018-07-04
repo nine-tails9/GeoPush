@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('provider')->default('email');
             $table->string('provider_id')->default('0');
+            $table->double('cor_X')->default('0.0');
+            $table->double('cor_Y')->default('0.0');
             $table->rememberToken();
             $table->timestamps();
         });

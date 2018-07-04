@@ -6,7 +6,8 @@
             <li class="list-group-item" :class = "{active: withh == user.to}" v-for="user in users" @click = "change(user)">
                 
                     {{user.name}}
-                    <span class="badge badge-primary badge-pill">{{user.cnt}}</span>
+                    
+                    <span class="badge badge-primary badge-pill" v-if="user.cnt>0">{{user.cnt}}</span>
             </li>
         </ul>
     </div>
@@ -41,6 +42,10 @@ import { EventBus } from '../app.js';
         },
         mounted() {
             EventBus.$on('newUser', (data) => {
+                console.log(data);
+                for(var i = 0; i < this.users.length; i++){
+                    if(this.users[i].to == data.to)return;
+                }
                 this.users.push(data);
             });
             EventBus.$on('newMessage', (data) =>{ 

@@ -1,9 +1,20 @@
 <template>
 
     <div class="container">
-        
 
+        <div class="form-group">
+                    <div class="input-group input-group-md">
+                        <div class="icon-addon addon-md">
+                            <input type="text" placeholder="Search for User" v-model = "query" class="form-control">
+                        </div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" @click="Search" v-if="!loading">Search!</button>
+                            <span class="fa fa-loading"></span>
+                        </span>
+                    </div>
+        </div>
         <button class="btn btn-default" @click = "findusers"> New Chat</button>
+
         <hr>
         <ul class="list-group list-group-flush">
             <li class="list-group-item" v-for="user in users">
@@ -26,7 +37,8 @@ import { EventBus } from '../app.js';
             
             return {
                 users : [],
-
+                query : "",
+                loading : false,
             }
         },
         methods:{
@@ -50,6 +62,22 @@ import { EventBus } from '../app.js';
                     name:name,
             
                 });
+            },
+
+            Search(){
+
+                console.log("GG");
+                this.loading = true;
+
+                axios.get('/search?q=' + this.query).then(response =>{
+
+                    this.users = response.data;
+                    this.query = '';
+
+                });
+
+                this.loading = false;
+
             }
         }
     };
