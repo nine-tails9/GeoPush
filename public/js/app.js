@@ -531,6 +531,7 @@ window.Vue = __webpack_require__(41);
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_browser_geolocation___default.a);
 var EventBus = new Vue();
+console.log("works");
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -547,7 +548,9 @@ Vue.component('master', __webpack_require__(59));
 
 Vue.component('chat-log', __webpack_require__(62));
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -53169,6 +53172,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        updateLocation: function updateLocation() {
+
+            this.$getLocation().then(function (coordinates) {
+
+                axios.post('/updateLoc', {
+                    cor_X: coordinates.lat,
+                    cor_Y: coordinates.lng
+                });
+            });
+        },
         findusers: function findusers() {
             var _this = this;
 
@@ -53265,7 +53278,11 @@ var render = function() {
       [_vm._v(" New Chat")]
     ),
     _vm._v(" "),
-    _c("button", { staticClass: "btn btn-success" }, [_vm._v("New Broadcast")]),
+    _c(
+      "button",
+      { staticClass: "btn btn-success", on: { click: _vm.updateLocation } },
+      [_vm._v("Get Location")]
+    ),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
@@ -53496,7 +53513,7 @@ var render = function() {
                   _vm._s(user.name) +
                   "\n                \n                "
               ),
-              user.cnt > 0
+              user.cnt
                 ? _c(
                     "span",
                     { staticClass: "badge badge-primary badge-pill" },
@@ -53608,7 +53625,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        console.log("G");
         this.$getLocation().then(function (coordinates) {
             console.log(coordinates);
         });

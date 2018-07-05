@@ -14,7 +14,7 @@
                     </div>
         </div>
         <button class="btn btn-default" @click = "findusers"> New Chat</button>
-        <button class="btn btn-success">New Broadcast</button>
+        <button class="btn btn-success" @click="updateLocation">Get Location</button>
         <hr>
         <ul class="list-group list-group-flush">
             <li class="list-group-item" v-for="user in users">
@@ -42,6 +42,21 @@ import { EventBus } from '../app.js';
             }
         },
         methods:{
+
+            updateLocation(){
+
+                this.$getLocation()
+                    .then(coordinates => {
+                    
+                    axios.post('/updateLoc', {
+                        cor_X : coordinates.lat,
+                        cor_Y : coordinates.lng
+                    });
+                });  
+
+
+
+            },
             findusers(){
 
                 axios.get('/findUser').then(response => {

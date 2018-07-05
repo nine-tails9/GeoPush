@@ -11,6 +11,7 @@ window.Vue = require('vue');
 import VueGeolocation from 'vue-browser-geolocation';
 Vue.use(VueGeolocation);
 export const EventBus = new Vue();
+console.log("works");
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -28,4 +29,8 @@ Vue.component('master', require('./components/master.vue'));
 Vue.component('chat-log', require('./components/chatlog.vue'));
 const app = new Vue({
     el: '#app',
+
+    mounted: function() {
+      
+    },
 });

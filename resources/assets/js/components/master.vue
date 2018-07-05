@@ -31,7 +31,6 @@
             }
         },
         mounted: function() {
-            console.log("G");
             this.$getLocation()
             .then(coordinates => {
                 console.log(coordinates);

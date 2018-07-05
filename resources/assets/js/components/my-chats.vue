@@ -12,7 +12,7 @@
                 
                     {{user.name}}
                     
-                    <span class="badge badge-primary badge-pill" v-if="user.cnt>0">{{user.cnt}}</span>
+                    <span class="badge badge-primary badge-pill" v-if="user.cnt">{{user.cnt}}</span>
             </li>
         </ul>
     </div>

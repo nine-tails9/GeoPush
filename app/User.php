@@ -16,6 +16,19 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $fillable = [
+        'name', 'email', 'password', 'provider', 'provider_id',  'cor_X', 'cor_Y'
+       ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
     public function toSearchableArray()
     {
         $record = $this->toArray();
@@ -30,19 +43,6 @@ class User extends Authenticatable
 
         return $record;
     }
-    protected $fillable = [
-        'name', 'email', 'password', 'provider', 'provider_id'
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
     public function messages(){
 
         return  $this->hasMany(message::Class, 'from');

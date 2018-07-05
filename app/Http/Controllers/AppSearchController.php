@@ -19,4 +19,5 @@ class AppSearchController extends Controller
         $users = User::search('')->aroundLatLng($lat, $lng)->get();
         return $users;
     }
+
 }

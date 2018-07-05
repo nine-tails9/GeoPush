@@ -52,6 +52,16 @@ Route::get('/globalChat', 'MessageController@Gchat');
 Route::get('/chat/{with}', 'MessageController@chat');
 Route::post('/sendMessage', 'MessageController@sendMessage');
 
+Route::post('/updateLoc', function(){
 
+    $user = Auth::user();
+    User::where('id','=', $user->id)->update(
+    [   'cor_Y' => request()->cor_Y,
+        'cor_X' => request()->cor_X    
+    ]);
+
+        return ['status' => 'New Chat Added!'];
+    
+});
 Route::post('/newChat', 'MessageController@newChat');
 
