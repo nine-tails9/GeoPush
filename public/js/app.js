@@ -377,33 +377,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -510,6 +483,33 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -547,6 +547,8 @@ Vue.component('my-chats', __webpack_require__(56));
 Vue.component('master', __webpack_require__(59));
 
 Vue.component('chat-log', __webpack_require__(62));
+
+Vue.component('area-Chat', __webpack_require__(65));
 var app = new Vue({
   el: '#app',
 
@@ -3184,7 +3186,7 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 6 */
@@ -14330,7 +14332,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
-module.exports = __webpack_require__(65);
+module.exports = __webpack_require__(68);
 
 
 /***/ }),
@@ -31509,7 +31511,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(18)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(18)(module)))
 
 /***/ }),
 /* 18 */
@@ -52450,7 +52452,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(42).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(42).setImmediate))
 
 /***/ }),
 /* 42 */
@@ -52520,7 +52522,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 43 */
@@ -52713,7 +52715,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
 
 /***/ }),
 /* 44 */
@@ -52730,7 +52732,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(46)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(49)
 /* template */
@@ -53039,7 +53041,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(52)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(54)
 /* template */
@@ -53205,7 +53207,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Search: function Search() {
             var _this2 = this;
 
-            console.log("GG");
             this.loading = true;
 
             axios.get('/search?q=' + this.query).then(function (response) {
@@ -53324,7 +53325,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(57)
 /* template */
@@ -53394,6 +53395,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53403,7 +53408,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             users: [],
             isActive: false,
-            cnt: 0
+            cnt: 0,
+            unread: 0
         };
     },
     created: function created() {
@@ -53420,8 +53426,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this2 = this;
 
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$on('clr', function (res) {
+            _this2.unread = 0;
+        });
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$on('unread', function (res) {
+            _this2.unread++;
+        });
         __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$on('newUser', function (data) {
-            console.log(data);
+
             for (var i = 0; i < _this2.users.length; i++) {
                 if (_this2.users[i].to == data.to) return;
             }
@@ -53486,7 +53498,17 @@ var render = function() {
             on: { click: _vm.area }
           },
           [
-            _vm._v("\n            Area Chat\n\n            "),
+            _vm._v("\n            Area Chat \n                "),
+            _vm.unread
+              ? _c("span", { staticClass: "badge badge-primary badge-pill" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.unread) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _vm.cnt
               ? _c("span", { staticClass: "badge badge-primary badge-pill" }, [
                   _vm._v(" " + _vm._s(_vm.cnt) + " ")
@@ -53543,7 +53565,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(60)
 /* template */
@@ -53610,6 +53632,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -53619,16 +53646,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         return {
             messages: [],
-            withh: 1
+            withh: -1,
+            myEvent: "areaMessage"
 
         };
     },
+    mounted: function mounted() {},
 
-    mounted: function mounted() {
-        this.$getLocation().then(function (coordinates) {
-            console.log(coordinates);
-        });
-    },
+
     methods: {
         run: function run(id) {
             this.withh = id.id;
@@ -53668,7 +53693,41 @@ var render = function() {
         [
           _c("new-chat"),
           _vm._v(" "),
-          _c("chat-log", { attrs: { withh: _vm.withh, id: _vm.id } })
+          _c(
+            "keep-alive",
+            [
+              _c("chat-log", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.withh > 0,
+                    expression: "withh > 0"
+                  }
+                ],
+                attrs: { withh: _vm.withh, id: _vm.id }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "keep-alive",
+            [
+              _c("area-Chat", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.withh,
+                    expression: "!withh"
+                  }
+                ],
+                attrs: { user: _vm.id, withh: _vm.withh }
+              })
+            ],
+            1
+          )
         ],
         1
       )
@@ -53690,7 +53749,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(63)
 /* template */
@@ -53760,6 +53819,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -53783,6 +53843,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Echo.private('P2Pchat.' + this.id).listen('messageSent', function (e) {
             if (e.message.to == 0) e.message.from = 0;
             if (e.message.from != _this.withh) {
+
                 __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$emit('newMessage', {
                     from: e.message.from
                 });
@@ -53807,10 +53868,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.messages = response.data;
                 });
             } else {
+                __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$emit('clr');
                 this.messages = [];
                 axios.get('/globalChat').then(function (res) {
 
-                    console.log(res.data);
                     for (var i = 0; i < res.data.length; i++) {
                         for (var j = res.data[i].length - 1; j >= 0; j--) {
                             _this2.messages.push(res.data[i][j]);
@@ -53929,6 +53990,209 @@ if (false) {
 
 /***/ }),
 /* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(66)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/areaChat.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-004fa41c", Component.options)
+  } else {
+    hotAPI.reload("data-v-004fa41c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['user', 'withh'],
+
+    data: function data() {
+
+        return {
+
+            newMessage: "",
+            nearBy: [],
+            messages: [],
+            unread: 0
+
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Echo.private('NewareaMessage.' + this.user).listen('areaMessage', function (e) {
+            if (_this.withh != 0) __WEBPACK_IMPORTED_MODULE_0__app_js__["EventBus"].$emit('unread');
+            _this.messages.push({
+                message: e.message
+
+            });
+        });
+    },
+
+    methods: {
+        sendMessage: function sendMessage() {
+            var message = this.newMessage;
+            axios.post('/areaMessage', {
+                message: this.newMessage
+
+            });
+
+            this.newMessage = "";
+        }
+    }
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm._l(_vm.messages, function(m) {
+        return _c("div", [
+          _vm._v(
+            "\n    " +
+              _vm._s(m.message) +
+              "\n    " +
+              _vm._s(_vm.unread) +
+              "\n    "
+          )
+        ])
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group", staticStyle: { width: "70%" } }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.newMessage,
+              expression: "newMessage"
+            }
+          ],
+          staticClass: "form-control input-sm",
+          attrs: {
+            id: "btn-input",
+            type: "text",
+            name: "message",
+            placeholder: "Type your message here..."
+          },
+          domProps: { value: _vm.newMessage },
+          on: {
+            keyup: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.sendMessage($event)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.newMessage = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "input-group-btn" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { id: "btn-chat" },
+              on: { click: _vm.sendMessage }
+            },
+            [_vm._v("\n            Send\n        ")]
+          )
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-004fa41c", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -9,6 +9,7 @@ use App\User;
 use App\messages;
 use App\Mychats;
 use App\Events\messageSent;
+
 class MessageController extends Controller
 {
     //
@@ -72,6 +73,13 @@ class MessageController extends Controller
             'to' => $req['to'],
             'name' => $req['name']
         ]);
+
+        $reverse = new Mychats;
+        $reverse['to'] = $user->id;
+        $reverse['user_id'] = $req['to'];
+        $reverse['name'] = $user->name;
+        $reverse->save();
+        
 
         return ['status' => 'New Chat Added!'];
 

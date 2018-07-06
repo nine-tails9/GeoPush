@@ -44,7 +44,7 @@ import { EventBus } from '../app.js';
         methods:{
 
             updateLocation(){
-
+                
                 this.$getLocation()
                     .then(coordinates => {
                     
@@ -61,7 +61,6 @@ import { EventBus } from '../app.js';
 
                 axios.get('/findUser').then(response => {
                     this.users = response.data;
-                    
                 });
 
             },
@@ -80,8 +79,6 @@ import { EventBus } from '../app.js';
             },
 
             Search(){
-
-                console.log("GG");
                 this.loading = true;
 
                 axios.get('/search?q=' + this.query).then(response =>{

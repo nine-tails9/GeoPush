@@ -27,6 +27,8 @@ Vue.component('my-chats', require('./components/my-chats.vue'));
 Vue.component('master', require('./components/master.vue'));
 
 Vue.component('chat-log', require('./components/chatlog.vue'));
+
+Vue.component('area-Chat', require('./components/areaChat.vue'));
 const app = new Vue({
     el: '#app',
 

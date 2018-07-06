@@ -1,5 +1,7 @@
 <?php
 
+use Laravel\Scout\Searchable;
+use App\Mychats;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +40,7 @@ Route::get('/findUser', function(){
 
 Route::get('/activeChats', function(){
     $user = Auth::user();
+
     $data = $user->mychats()->get();
     return $data;
 });
@@ -50,6 +53,8 @@ Route::get('/search', [
 Route::get('/globalChat', 'MessageController@Gchat');
 
 Route::get('/chat/{with}', 'MessageController@chat');
+
+Route::post('/areaMessage', 'AppSearchController@SendareaMessage');
 Route::post('/sendMessage', 'MessageController@sendMessage');
 
 Route::post('/updateLoc', function(){
@@ -59,6 +64,8 @@ Route::post('/updateLoc', function(){
     [   'cor_Y' => request()->cor_Y,
         'cor_X' => request()->cor_X    
     ]);
+
+    $user->searchable();
 
         return ['status' => 'New Chat Added!'];
     

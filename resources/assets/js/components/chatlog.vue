@@ -1,6 +1,7 @@
 <template>
 
     <div class="container">
+    
         <ul class="list-group">
             <li class="list-group-item"  :class="[message.to==withh?me:'']"  v-for = "message in messages">
                     {{ message.message }}
@@ -41,6 +42,7 @@ import { EventBus } from '../app.js';
                     'messageSent', (e) =>{
                         if(e.message.to == 0)e.message.from = 0;
                         if(e.message.from != this.withh){
+                            
                             EventBus.$emit('newMessage', {
                                 from: e.message.from
                             });
@@ -59,7 +61,6 @@ import { EventBus } from '../app.js';
 
             withh: function(){
 
-
                 if(this.withh != 0){
 
                     axios.get('/chat/' + this.withh).then(response =>{
@@ -67,10 +68,10 @@ import { EventBus } from '../app.js';
                     });
 
                 }else{
+                    EventBus.$emit('clr');
                     this.messages = [];
                     axios.get('/globalChat').then(res =>{
 
-                        console.log(res.data);
                         for(var i = 0; i < res.data.length; i++)
                             for(var j = res.data[i].length - 1; j >= 0; j--)
                                 this.messages.push(res.data[i][j]);

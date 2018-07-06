@@ -4,7 +4,11 @@
         
         <ul class="list-group">
             <li class="list-group-item" @click = "area" :class="{active:isActive}">
-                Area Chat
+                Area Chat 
+                    <span class="badge badge-primary badge-pill" v-if="unread">
+                        {{unread}}
+                    </span>
+
 
                 <span class="badge badge-primary badge-pill" v-if="cnt"> {{ cnt }} </span>
             </li>
@@ -31,7 +35,8 @@ import { EventBus } from '../app.js';
             return {
                 users : [],
                 isActive: false,
-                cnt: 0
+                cnt: 0,
+                unread: 0
             }
         },
         created(){
@@ -47,8 +52,14 @@ import { EventBus } from '../app.js';
 
         },
         mounted() {
+            EventBus.$on('clr', (res) =>{
+                this.unread = 0;
+            });
+            EventBus.$on('unread', (res)=> {
+                this.unread++;
+            });
             EventBus.$on('newUser', (data) => {
-                console.log(data);
+                
                 for(var i = 0; i < this.users.length; i++){
                     if(this.users[i].to == data.to)return;
                 }
