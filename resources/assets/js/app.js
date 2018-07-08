@@ -9,9 +9,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import VueGeolocation from 'vue-browser-geolocation';
+
+import store from './store.js';
+
 Vue.use(VueGeolocation);
+
 export const EventBus = new Vue();
-console.log("works");
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -31,6 +35,7 @@ Vue.component('chat-log', require('./components/chatlog.vue'));
 Vue.component('area-Chat', require('./components/areaChat.vue'));
 const app = new Vue({
     el: '#app',
+    store,
 
     mounted: function() {
       

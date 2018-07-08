@@ -31,6 +31,8 @@
 
 <script>    
 import { EventBus } from '../app.js';
+
+import {mapMutations} from 'vuex';
     export default{
 
         data(){
@@ -70,12 +72,10 @@ import { EventBus } from '../app.js';
                     to:user,
                     name:name
                 });
+                
+                
+                this.$store.commit('addUser', {name:name, to:user});
 
-                EventBus.$emit('newUser',{
-                    to:user,
-                    name:name,
-            
-                });
             },
 
             Search(){
