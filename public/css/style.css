@@ -1,0 +1,77 @@
+body, html{
+
+    height: 100%;
+}
+.bg{
+
+    background-image: url("mainBg.png");
+
+    height: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.typewriter{
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .10em; /* Adjust as needed */
+  animation: 
+    typing 5s steps(60, end),
+    blink-caret .75s infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0% }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
+
+.hold{
+    overflow: hidden;
+    opacity: 0;
+
+    animation: setback 6s steps(100, end) forwards;
+}
+@keyframes setback{
+    50%{
+        opacity: 0;
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+nav{
+    background-color: #d4c7c6;
+    animation: bg-color 10s infinite;
+    -webkit-animation: bg-color 10s infinite;
+  }
+  
+  @-webkit-keyframes bg-color {
+    0% { background-color: #e74c3c; }
+    20% { background-color: #cb93d3; }
+    40% { background-color: #81d3c3; }
+    60% { background-color: #3498db; }
+    80% { background-color: #cf9fe2; }
+    100% { background-color: #dd7165; }
+  }
+  
+  @keyframes bg-color {
+    0% { background-color: #e74c3c; }
+    20% { background-color: #bc99e9; }
+    40% { background-color: #1abc9c; }
+    60% { background-color: #3498db; }
+    80% { background-color: #c88edf; }
+    100% { background-color: #d48e86; }
+  }

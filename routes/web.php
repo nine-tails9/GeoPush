@@ -17,7 +17,7 @@ if (env('APP_ENV') === 'production') {
 }
 use App\User;
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts/index');
 });
 
 Auth::routes();

@@ -1,14 +1,14 @@
 <template>
 
     <div class="container">
-        <div class="row">
-            <div class="col">
+        <div class="columns">
+            <div class="column">
                 
                 <h2>My Chats</h2>
                 <hr>
                 <my-chats  v-on:change = "run" :withh = "withh"></my-chats>
             </div>
-            <div class="col-md-8">
+            <div class="column">
                 <new-chat></new-chat>
                 <keep-alive>
                 <chat-log :withh = "withh" :id = "id" v-show="withh > 0"></chat-log>

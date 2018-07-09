@@ -18,7 +18,7 @@
         <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="sendMessage">
 
         <span class="input-group-btn">
-            <button class="btn btn-primary" id="btn-chat" @click="sendMessage">
+            <button class="button is-dark" id="btn-chat" @click="sendMessage">
                 Send
             </button>
         </span>

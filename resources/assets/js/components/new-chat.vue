@@ -19,7 +19,7 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item" v-for="user in users">
                 {{ user.name }}
-                <button class="btn btn-sm btn-dark is-pulled-right" @click = "newChat(user.id, user.name)">
+                <button class="button is-primary" @click = "newChat(user.id, user.name)">
                     Chat
                 </button>
                 
